@@ -17,7 +17,7 @@ class Api::V1::AssetsController < ApplicationController
   def show
     render json: {
       data: @asset.as_json().merge(
-        file: @asset.get_asset_file(current_user)
+        file: @asset.accessible_by?(current_user) ? @asset.asset_files : nil
       )
     }, status: :ok
   rescue ActiveRecord::RecordNotFound
@@ -29,6 +29,6 @@ class Api::V1::AssetsController < ApplicationController
   private
 
   def set_asset
-    @asset = Asset.find(params[:id])
+    @asset = Asset.includes(:asset_files).find(params[:id])
   end
 end

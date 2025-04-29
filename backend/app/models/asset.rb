@@ -6,9 +6,9 @@ class Asset < ApplicationRecord
   validates :description, presence: true
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
-  def get_asset_file(user)
-    return asset_files if user.admin? || user.id == creator_id
+  def accessible_by?(user)
+    return true if user.admin? || user.id == creator_id
     # TODO: Check order later
-    nil
+    false
   end
 end
