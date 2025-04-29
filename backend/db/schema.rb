@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_29_103559) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_29_133333) do
+  create_table "asset_files", force: :cascade do |t|
+    t.string "file_url", null: false
+    t.integer "asset_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["asset_id"], name: "index_asset_files_on_asset_id"
+  end
+
+  create_table "assets", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.integer "price", null: false
+    t.integer "creator_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_assets_on_creator_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -30,5 +48,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_29_103559) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
+  add_foreign_key "asset_files", "assets"
+  add_foreign_key "assets", "users", column: "creator_id"
   add_foreign_key "users", "roles"
 end

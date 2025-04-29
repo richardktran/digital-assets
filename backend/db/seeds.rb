@@ -10,8 +10,10 @@
 
 
 # Clear existing data
-Role.destroy_all
+AssetFile.destroy_all
+Asset.destroy_all
 User.destroy_all
+Role.destroy_all
 
 # Create roles
 creator_role = Role.create!(name: 'creator')
@@ -27,7 +29,7 @@ User.create!(
 )
 
 # Create creators
-User.create!(
+creator1 = User.create!(
   email: 'creator1@gg.com',
   password: 'test123',
   first_name: 'Creator',
@@ -35,7 +37,7 @@ User.create!(
   role: creator_role
 )
 
-User.create!(
+creator2 = User.create!(
   email: 'creator2@gg.com',
   password: 'test123',
   first_name: 'Creator',
@@ -43,4 +45,50 @@ User.create!(
   role: creator_role
 )
 
-puts "Seeded #{Role.count} roles, #{User.count} users"
+# Create assets for creator1
+asset1 = Asset.create!(
+  title: 'Digital Artwork 1',
+  description: 'A beautiful digital painting.',
+  price: 19.99,
+  creator: creator1
+)
+AssetFile.create!(
+  asset: asset1,
+  file_url: 'https://example.com/files/artwork1.png'
+)
+
+asset2 = Asset.create!(
+  title: 'Music Track 1',
+  description: 'An original music composition.',
+  price: 9.99,
+  creator: creator1
+)
+AssetFile.create!(
+  asset: asset2,
+  file_url: 'https://example.com/files/track1.mp3'
+)
+
+# Create assets for creator2
+asset3 = Asset.create!(
+  title: '3D Model 1',
+  description: 'A detailed 3D model for games.',
+  price: 29.99,
+  creator: creator2
+)
+AssetFile.create!(
+  asset: asset3,
+  file_url: 'https://example.com/files/model1.obj'
+)
+
+asset4 = Asset.create!(
+  title: 'Video Tutorial 1',
+  description: 'A comprehensive video tutorial.',
+  price: 14.99,
+  creator: creator2
+)
+AssetFile.create!(
+  asset: asset4,
+  file_url: 'https://example.com/files/tutorial1.mp4'
+)
+
+puts "Seeded #{Role.count} roles, #{User.count} users, #{Asset.count} assets, and #{AssetFile.count} asset files."
