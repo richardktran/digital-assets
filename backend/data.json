@@ -1,0 +1,123 @@
+[
+    {
+      "title": "Modern UI Kit",
+      "description": "A complete UI kit with over 200 components for modern web apps.",
+      "file_url": "https://example.com/files/ui-kit.zip",
+      "price": 29.99
+    },
+    {
+      "title": "E-commerce Icon Pack",
+      "description": "50 vector icons optimized for online stores.",
+      "file_url": "https://example.com/files/ecommerce-icons.zip",
+      "price": 9.99
+    },
+    {
+      "title": "Resume Template - Minimalist",
+      "description": "A clean and professional resume template in Word and PDF formats.",
+      "file_url": "https://example.com/files/resume-template.zip",
+      "price": 4.99
+    },
+    {
+      "title": "Dark Mode Dashboard",
+      "description": "A sleek dark-themed admin dashboard template built with Tailwind CSS.",
+      "file_url": "https://example.com/files/dark-dashboard.zip",
+      "price": 24.00
+    },
+    {
+      "title": "Photography Lightroom Presets",
+      "description": "10 presets to enhance outdoor and portrait photos.",
+      "file_url": "https://example.com/files/lightroom-presets.zip",
+      "price": 12.50
+    },
+    {
+      "title": "Invoice Generator App Template",
+      "description": "A full-featured React template for creating invoices.",
+      "file_url": "https://example.com/files/invoice-app.zip",
+      "price": 39.00
+    },
+    {
+      "title": "Landing Page - Startup",
+      "description": "A responsive landing page perfect for SaaS startups.",
+      "file_url": "https://example.com/files/startup-landing.zip",
+      "price": 19.95
+    },
+    {
+      "title": "Mobile App Wireframes",
+      "description": "Figma wireframes for iOS and Android mobile apps.",
+      "file_url": "https://example.com/files/app-wireframes.zip",
+      "price": 14.99
+    },
+    {
+      "title": "Blog Template - GatsbyJS",
+      "description": "A high-performance blog starter built with GatsbyJS.",
+      "file_url": "https://example.com/files/gatsby-blog.zip",
+      "price": 17.00
+    },
+    {
+      "title": "Music Visualizer Template",
+      "description": "After Effects template for visualizing music and audio.",
+      "file_url": "https://example.com/files/music-visualizer.zip",
+      "price": 8.75
+    },
+    {
+      "title": "3D Icons Pack",
+      "description": "A colorful collection of 3D-style icons in PNG and SVG.",
+      "file_url": "https://example.com/files/3d-icons.zip",
+      "price": 15.00
+    },
+    {
+      "title": "Notion Productivity Template",
+      "description": "Boost your productivity with this all-in-one Notion dashboard.",
+      "file_url": "https://example.com/files/notion-template.zip",
+      "price": 5.00
+    },
+    {
+      "title": "Fitness Tracker UI Kit",
+      "description": "Figma design system for health and fitness mobile apps.",
+      "file_url": "https://example.com/files/fitness-ui-kit.zip",
+      "price": 11.49
+    },
+    {
+      "title": "Cyberpunk Photoshop Brushes",
+      "description": "25 brushes inspired by cyberpunk and sci-fi aesthetics.",
+      "file_url": "https://example.com/files/cyberpunk-brushes.zip",
+      "price": 6.99
+    },
+    {
+      "title": "Portfolio Website Template",
+      "description": "A personal portfolio template built with Next.js.",
+      "file_url": "https://example.com/files/portfolio-template.zip",
+      "price": 21.00
+    },
+    {
+      "title": "Finance Dashboard Excel",
+      "description": "Track personal or business expenses with this Excel template.",
+      "file_url": "https://example.com/files/finance-dashboard.xlsx",
+      "price": 4.25
+    },
+    {
+      "title": "Digital Planner PDF",
+      "description": "A printable and GoodNotes-compatible digital planner.",
+      "file_url": "https://example.com/files/digital-planner.pdf",
+      "price": 7.50
+    },
+    {
+      "title": "Crypto UI Kit",
+      "description": "UI kit designed for cryptocurrency and blockchain platforms.",
+      "file_url": "https://example.com/files/crypto-ui-kit.zip",
+      "price": 18.99
+    },
+    {
+      "title": "Nature Sound Pack",
+      "description": "High-quality ambient nature sounds for video or meditation.",
+      "file_url": "https://example.com/files/nature-sounds.zip",
+      "price": 3.50
+    },
+    {
+      "title": "Restaurant Menu Template",
+      "description": "Editable InDesign and Canva templates for restaurants.",
+      "file_url": "https://example.com/files/menu-template.zip",
+      "price": 9.49
+    }
+  ]
+  
