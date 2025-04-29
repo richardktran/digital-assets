@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post "auth", to: "auth#login"
 
-      resources :assets, only: %i[index show]
+      resources :assets, only: %i[index show update destroy]
     end
   end
 end
