@@ -10,10 +10,10 @@
 
 
 # Clear existing data
-User.destroy_all
-Role.destroy_all
 AssetFile.destroy_all
 Asset.destroy_all
+User.destroy_all
+Role.destroy_all
 
 # Create roles
 creator_role = Role.create!(name: 'creator')
