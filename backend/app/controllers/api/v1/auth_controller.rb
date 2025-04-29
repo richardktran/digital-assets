@@ -9,7 +9,7 @@ module Api
           token = JsonWebToken.encode(user_id: user.id)
           expires_at = JsonWebToken.decode(token)[:exp]
 
-          render json: { token:, expires_at: }, status: :ok
+          render json: { token:, expires_at:, user: }, status: :ok
         else
           render json: { error: "unauthorized" }, status: :unauthorized
         end
