@@ -1,0 +1,35 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    command: npm run dev
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "8000:8000"  # expose port 80 from container as 8000 locally
+    environment:
+      - RAILS_ENV=development
+      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}  # or hardcode for dev
+    volumes:
+      - ./backend:/rails
+    working_dir: /rails
+    command: >
+      bash -c "
+        bundle exec rails db:prepare &&
+        bundle exec rails db:seed &&
+        ./bin/thrust ./bin/rails server -b 0.0.0.0 -p 8000
+      "
