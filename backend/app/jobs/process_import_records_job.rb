@@ -19,7 +19,7 @@ class ProcessImportRecordsJob < ApplicationJob
         end
         record.update!(status: "imported")
       rescue ActiveRecord::RecordInvalid => e
-        record.update!(status: "failed", error_message: e.message)
+        record.update!(status: "failed", error: e.message)
       end
     end
 

@@ -13,14 +13,25 @@ class ImportAssetsJob < ApplicationJob
       batch_size = 1000
       record_ids = []
 
+      failed_ids = []
+
       data.each_slice(batch_size) do |batch|
-        record_ids.concat(process_batch(import_job, batch))
+        begin
+          record_ids.concat(process_batch(import_job, batch))
+        rescue StandardError => e
+          failed_ids.concat(batch.map { |asset_data| asset_data['id'] })
+          Rails.logger.error("Batch processing failed: #{e.message}")
+        end
       end
 
       last_id = record_ids.last
 
       record_ids.each_slice(batch_size) do |chunk|
         ProcessImportRecordsJob.perform_later(import_job.id, chunk, last_id)
+      end
+
+      if failed_ids.any?
+        import_job.update!(status: "failed", error: "Failed records: #{failed_ids.join(', ')}")
       end
     rescue StandardError => e
       import_job.update!(status: "failed", error: e.message)
@@ -33,17 +44,28 @@ class ImportAssetsJob < ApplicationJob
     ImportRecord.transaction do
       batch.map do |asset_data|
         begin
+          required_fields = %w[title file_url price]
+          missing_fields = required_fields.select { |field| asset_data[field].nil? }
+
           record = ImportRecord.create!(
             import_job: import_job,
             title: asset_data['title'],
             description: asset_data['description'],
             file_url: asset_data['file_url'],
-            price: asset_data['price']*100, # Convert to cents
+            price: asset_data['price'] ? asset_data['price'] * 100 : nil, # Convert to cents if present, otherwise nil
             status: 'pending'
           )
+
+          unless missing_fields.empty?
+            record.update!(error: "Missing fields: #{missing_fields.join(', ')}")
+          end
+
           record.id
         rescue ActiveRecord::RecordInvalid => e
           Rails.logger.error("Failed to create ImportRecord: #{e.message}, Data: #{asset_data}")
+          nil # Skip invalid records
+        rescue StandardError => e
+          Rails.logger.error("Error processing asset data: #{e.message}, Data: #{asset_data}")
           nil # Skip invalid records
         end
       end.compact # Remove nil values from the array
