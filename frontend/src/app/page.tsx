@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCookie } from 'cookies-next';
+import Link from 'next/link';
 
 interface User {
   id: number;
@@ -61,6 +62,14 @@ export default function HomePage() {
                 >
                   Admin Dashboard
                 </button>
+              )}
+              {user?.role.name === 'creator' && (
+                <Link
+                  href="/creator/import"
+                  className="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                >
+                  Import Assets
+                </Link>
               )}
               <button
                 onClick={handleLogout}
