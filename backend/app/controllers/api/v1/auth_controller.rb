@@ -7,9 +7,9 @@ class Api::V1::AuthController < ApplicationController
       token = JsonWebToken.encode(user_id: user.id)
       expires_at = JsonWebToken.decode(token)[:exp]
 
-      render json: { token:, expires_at:, user: }, status: :ok
+      response_success({ token:, expires_at:, user: })
     else
-      render json: { error: "unauthorized" }, status: :unauthorized
+      response_error("unauthorized", status: :unauthorized)
     end
   end
 end

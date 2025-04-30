@@ -31,22 +31,16 @@ class Api::V1::AssetsController < ApplicationController
 
       render_assets(@asset)
     else
-      render json: {
-        error: @asset.errors.full_messages
-      }, status: :unprocessable_entity
+      response_error(@asset.errors.full_messages)
     end
   end
 
   def destroy
     @asset.destroy
 
-    render json: {
-      message: "Asset deleted successfully"
-    }, status: :ok
+    response_success("Asset deleted successfully")
   rescue ActiveRecord::RecordNotDestroyed
-    render json: {
-      error: "Failed to delete asset"
-    }, status: :unprocessable_entity
+    response_error("Failed to delete asset")
   end
 
   private
@@ -54,9 +48,7 @@ class Api::V1::AssetsController < ApplicationController
   def set_asset
     @asset = Asset.includes(:asset_files).find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: {
-      error: "Asset not found"
-    }, status: :not_found
+    response_error("Asset not found", status: :not_found)
   end
 
   def asset_params
@@ -68,8 +60,6 @@ class Api::V1::AssetsController < ApplicationController
   end
 
   def render_assets(assets)
-    render json: {
-      data: assets.as_json(current_user: current_user)
-    }, status: :ok
+    response_success(assets.as_json(current_user: current_user))
   end
 end

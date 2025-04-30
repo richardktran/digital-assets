@@ -6,8 +6,8 @@
 - [x] API for admin to manage assets and knowing Earnings of each creator
 - [x] Handle cents unit currency
 - [x] Setup Enum for asset status
+- [x] Standardize API responses
 - [ ] Setup S3 instead of local storage
-- [ ] Standardize API responses
 - [ ] Build a job to simulate payment
 - [ ] Soft delete
 - [ ] Setup docker

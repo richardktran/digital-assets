@@ -4,11 +4,11 @@ class Api::V1::OrdersController < ApplicationController
 
   def index
     orders = current_user.orders
-    render json: { data: orders }, status: :ok
+    response_success(orders)
   end
 
   def show
-    render json: { data: @order }, status: :ok
+    response_success(@order)
   end
 
   def create
@@ -18,22 +18,22 @@ class Api::V1::OrdersController < ApplicationController
 
 
     unless idempotency_key
-      return render json: { error: "Idempotency key required" }, status: :bad_request
+      response_error("Idempotency key required", status: :bad_request)
     end
     if asset_ids.empty?
-      return render json: { error: "At least one asset required" }, status: :unprocessable_entity
+      response_error("At least one asset required", status: :unprocessable_entity)
     end
 
     existing_order = Order.find_by(idempotency_key: idempotency_key)
     if existing_order
-      render json: { data: existing_order }, status: :ok
+      response_success(existing_order)
       return
     end
 
     Order.transaction do
       assets = Asset.where(id: asset_ids)
       if assets.count != asset_ids.size
-        return render json: { error: "Some assets not found" }, status: :not_found
+        response_error("Some assets not found", status: :not_found)
       end
 
       total_price = assets.sum do |asset|
@@ -48,7 +48,7 @@ class Api::V1::OrdersController < ApplicationController
       )
 
       if order.invalid?
-        return render json: { error: order.errors.full_messages }, status: :unprocessable_entity
+        response_error(order.errors.full_messages, status: :unprocessable_entity)
       end
 
       assets.each do |asset|
@@ -62,10 +62,10 @@ class Api::V1::OrdersController < ApplicationController
       # Simulate a payment success
       order.update!(status: :completed)
 
-      render json: { data: order }, status: :created
+      response_success(order)
     end
   rescue ActiveRecord::RecordInvalid => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    response_error(e.message, status: :unprocessable_entity)
   end
 
   private
@@ -73,7 +73,7 @@ class Api::V1::OrdersController < ApplicationController
   def set_order
     @order = Order.find_by(id: params[:id])
     unless @order
-      render json: { error: "Order not found" }, status: :not_found
+      response_error("Order not found", status: :not_found)
     end
   end
 
