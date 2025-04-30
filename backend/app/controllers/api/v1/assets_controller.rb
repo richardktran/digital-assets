@@ -2,51 +2,24 @@ class Api::V1::AssetsController < ApplicationController
   include Authenticatable
   before_action :set_asset, only: [ :show, :update, :destroy ]
 
-  def import
-    unless params[:file]
-      return render json: { error: "File is required" }, status: :unprocessable_entity
-    end
-
-    unless params[:file]&.content_type == "application/json"
-      return render json: { error: "Must upload a JSON file" }, status: :unprocessable_entity
-    end
-
-    # find import job with status pending
-    import_job = ImportJob.where(creator: current_user, status: "pending").first
-    if import_job
-      return render json: { error: "A job is already being processed. Please wait for it to finish." }, status: :unprocessable_entity
-    end
-
-    import_job = ImportJob.new(creator: current_user, status: "pending")
-    import_job.file.attach(params[:file])
-    if import_job.save
-      ImportAssetsJob.perform_later(import_job.id)
-      render json: { import_job_id: import_job.id, status: "pending" }, status: :accepted
-    else
-      render json: { error: import_job.errors.full_messages.join(", ") }, status: :unprocessable_entity
-    end
-  # rescue StandardError => e
-  #   render json: { error: "Import failed: #{e.message}" }, status: :unprocessable_entity
-  end
-
   def index
     if params[:creator_id]
       assets = Asset.where(creator_id: params[:creator_id])
     else
-      assets = Asset.all
+      assets = Asset.where.not(creator_id: current_user.id)
     end
 
-    render json: {
-      data: assets
-    }, status: :ok
+    render_assets(assets)
+  end
+
+  def my
+    assets = Asset.where(creator_id: current_user.id)
+
+    render_assets(assets)
   end
 
   def show
-    render json: {
-      data: @asset.as_json().merge(
-        file: @asset.accessible_by?(current_user) ? @asset.asset_files : nil
-      )
-    }, status: :ok
+    render_assets(@asset)
   end
 
   def update
@@ -56,9 +29,7 @@ class Api::V1::AssetsController < ApplicationController
         asset_file.update(asset_file_params)
       end
 
-      render json: {
-        data: @asset
-      }, status: :ok
+      render_assets(@asset)
     else
       render json: {
         error: @asset.errors.full_messages
@@ -94,5 +65,11 @@ class Api::V1::AssetsController < ApplicationController
 
   def asset_file_params
     params.require(:asset_file).permit(:file_url)
+  end
+
+  def render_assets(assets)
+    render json: {
+      data: assets.as_json(current_user: current_user)
+    }, status: :ok
   end
 end

@@ -15,4 +15,16 @@ class Asset < ApplicationRecord
 
     order_items.joins(:order).exists?(orders: { user_id: user.id, status: "completed" })
   end
+
+  def as_json(options = {})
+    if options[:current_user]
+      if accessible_by?(options[:current_user])
+        super(options.merge(include: [:asset_files]))
+      else
+        super(options)
+      end
+    else
+      super(options)
+    end
+  end
 end
