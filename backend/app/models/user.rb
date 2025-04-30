@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates :role, presence: true
 
   def as_json(options = {})
-    super(options.merge(only: [ :id, :email, :first_name, :last_name ]))
+    super(options.merge(only: [ :id, :email, :first_name, :last_name, :role_id ], include: { role: { only: :name } }))
   end
 
   def admin?

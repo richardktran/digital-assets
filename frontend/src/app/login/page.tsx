@@ -10,6 +10,23 @@ interface ErrorResponse {
   message: string;
 }
 
+interface User {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  role_id: number;
+  role: {
+    name: string;
+  };
+}
+
+interface LoginResponse {
+  token: string;
+  expires_at: number;
+  user: User;
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -21,10 +38,18 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const { data } = await api.post('/api/v1/auth', { email, password });
+      const { data } = await api.post<LoginResponse>('/api/v1/auth', { email, password });
       
       // Set the token cookie
       setCookie('token', data.token, {
+        maxAge: data.expires_at - Math.floor(Date.now() / 1000),
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+      });
+
+      // Set the user cookie
+      setCookie('user', JSON.stringify(data.user), {
         maxAge: data.expires_at - Math.floor(Date.now() / 1000),
         path: '/',
         secure: process.env.NODE_ENV === 'production',
