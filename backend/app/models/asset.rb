@@ -1,4 +1,7 @@
 class Asset < ApplicationRecord
+  include CentsAttribute
+  cents_accessor :price
+  
   belongs_to :creator, class_name: "User"
   has_one :asset_files, class_name: "AssetFile", foreign_key: "asset_id", dependent: :destroy
   has_many :order_items, dependent: :destroy
