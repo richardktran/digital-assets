@@ -84,6 +84,13 @@ data2.json
 - password (For all accounts): test123
 ```
 
+### API Documentation
+https://documenter.getpostman.com/view/25648055/2sB2j3DCd4
+
+API collection file: Digital assets.postman_collection.json
+
+Environment collection file: Digital assets.postman_environment.json
+
 ### Test Case Description
 
 | Feature | Test Case Description | Expected Result | Notes |
