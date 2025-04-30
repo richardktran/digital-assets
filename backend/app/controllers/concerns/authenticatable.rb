@@ -9,15 +9,15 @@ module Authenticatable
 
   def authenticate
     token = request.headers['Authorization']&.split('Bearer ')&.last
-    return render json: { error: 'Missing token' }, status: :unauthorized unless token
+    return response_error('Missing token', status: :unauthorized) unless token
 
     begin
       payload = JWT.decode(token, Rails.application.credentials.secret_key_base).first
       @current_user = User.find(payload['user_id'])
     rescue JWT::ExpiredSignature
-      render json: { error: 'Token expired' }, status: :unauthorized
+      response_error('Token expired', status: :unauthorized)
     rescue JWT::DecodeError, ActiveRecord::RecordNotFound
-      render json: { error: 'Invalid token' }, status: :unauthorized
+      response_error('Invalid token', status: :unauthorized)
     end
   end
 
