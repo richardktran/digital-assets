@@ -7,5 +7,6 @@
 - [ ] Setup S3 instead of local storage
 - [ ] Setup Enum for asset status
 - [ ] Standardize API responses
+- [ ] Build a job to simulate payment
 - [ ] Soft delete
 - [ ] Setup docker
