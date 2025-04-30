@@ -10,6 +10,6 @@ class Asset < ApplicationRecord
   def accessible_by?(user)
     return true if user.admin? || user.id == creator_id
 
-    order_items.joins(:order).exists?(orders: { user_id: user.id })
+    order_items.joins(:order).exists?(orders: { user_id: user.id, status: "completed" })
   end
 end
