@@ -17,8 +17,10 @@ class ImportAssetsJob < ApplicationJob
         record_ids.concat(process_batch(import_job, batch))
       end
 
-      record_ids.each_slice(10_000) do |chunk|
-        ProcessImportRecordsJob.perform_later(import_job.id, chunk)
+      last_id = record_ids.last
+
+      record_ids.each_slice(batch_size) do |chunk|
+        ProcessImportRecordsJob.perform_later(import_job.id, chunk, last_id)
       end
     rescue StandardError => e
       import_job.update!(status: "failed", error: e.message)

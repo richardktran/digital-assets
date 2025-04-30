@@ -1,9 +1,9 @@
 class ProcessImportRecordsJob < ApplicationJob
   queue_as :default
 
-  def perform(import_job_id, record_ids)
+  def perform(import_job_id, record_ids, last_id)
     import_job = ImportJob.find(import_job_id)
-    ImportRecord.where(id: record_ids).find_each(batch_size: 1000) do |record|
+    ImportRecord.where(id: record_ids).each do |record|
       begin
         Asset.transaction do
           asset = Asset.create!(
@@ -21,6 +21,10 @@ class ProcessImportRecordsJob < ApplicationJob
       rescue ActiveRecord::RecordInvalid => e
         record.update!(status: "failed", error_message: e.message)
       end
+    end
+
+    if record_ids.include?(last_id)
+      import_job.update!(status: "completed")
     end
   end
 end
