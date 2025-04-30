@@ -16,6 +16,13 @@ class Api::V1::ImportJobsController < ApplicationController
     end
   end
 
+  def latest
+    @import_job = ImportJob.where(creator: current_user).order(created_at: :desc).first
+    render json: {
+      data: @import_job.as_json
+    }
+  end
+
   private
 
 
