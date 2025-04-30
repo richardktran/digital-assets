@@ -1,6 +1,7 @@
 class Asset < ApplicationRecord
   belongs_to :creator, class_name: "User"
   has_one :asset_files, class_name: "AssetFile", foreign_key: "asset_id", dependent: :destroy
+  has_many :order_items, dependent: :destroy
 
   validates :title, presence: true
   validates :description, presence: true
@@ -8,7 +9,7 @@ class Asset < ApplicationRecord
 
   def accessible_by?(user)
     return true if user.admin? || user.id == creator_id
-    # TODO: Check order later
-    false
+
+    order_items.joins(:order).exists?(orders: { user_id: user.id })
   end
 end

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
           get "jobs/:id", to: "import_jobs#show"
         end
       end
+
+      resources :orders, only: %i[index create show]
     end
   end
 end
