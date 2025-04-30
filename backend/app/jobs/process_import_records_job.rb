@@ -17,14 +17,14 @@ class ProcessImportRecordsJob < ApplicationJob
             file_url: record.file_url
           )
         end
-        record.update!(status: "imported")
+        record.update!(status: :imported)
       rescue ActiveRecord::RecordInvalid => e
-        record.update!(status: "failed", error: e.message)
+        record.update!(status: :failed, error: e.message)
       end
     end
 
     if record_ids.include?(last_id)
-      import_job.update!(status: "completed")
+      import_job.update!(status: :completed)
     end
   end
 end

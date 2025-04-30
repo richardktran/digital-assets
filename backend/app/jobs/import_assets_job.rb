@@ -3,7 +3,7 @@ class ImportAssetsJob < ApplicationJob
 
   def perform(import_job_id)
     import_job = ImportJob.find(import_job_id)
-    import_job.update(status: "processing")
+    import_job.update(status: :processing)
 
     begin
       file = import_job.file
@@ -31,10 +31,10 @@ class ImportAssetsJob < ApplicationJob
       end
 
       if failed_ids.any?
-        import_job.update!(status: "failed", error: "Failed records: #{failed_ids.join(', ')}")
+        import_job.update!(status: :failed, error: "Failed records: #{failed_ids.join(', ')}")
       end
     rescue StandardError => e
-      import_job.update!(status: "failed", error: e.message)
+      import_job.update!(status: :failed, error: e.message)
     end
   end
 
@@ -53,7 +53,7 @@ class ImportAssetsJob < ApplicationJob
             description: asset_data['description'],
             file_url: asset_data['file_url'],
             price: asset_data['price'] ? asset_data['price'] : nil, # Convert to cents if present, otherwise nil
-            status: 'pending'
+            status: :pending
           )
 
           unless missing_fields.empty?

@@ -22,16 +22,16 @@ class Api::V1::ImportJobsController < ApplicationController
     end
 
     # find import job with status pending
-    import_job = ImportJob.where(creator: current_user, status: "pending").first
+    import_job = ImportJob.where(creator: current_user, status: :pending).first
     if import_job
       return render json: { error: "A job is already being processed. Please wait for it to finish." }, status: :unprocessable_entity
     end
 
-    import_job = ImportJob.new(creator: current_user, status: "pending")
+    import_job = ImportJob.new(creator: current_user, status: :pending)
     import_job.file.attach(params[:file])
     if import_job.save
       ImportAssetsJob.perform_later(import_job.id)
-      render json: { import_job_id: import_job.id, status: "pending" }, status: :accepted
+      render json: { import_job_id: import_job.id, status: :pending }, status: :accepted
     else
       render json: { error: import_job.errors.full_messages.join(", ") }, status: :unprocessable_entity
     end
@@ -42,7 +42,7 @@ class Api::V1::ImportJobsController < ApplicationController
   private
 
   def render_import_job(import_job)
-    if import_job.status == "completed"
+    if import_job.completed?
       render json: {
         data: import_job.as_json(include: { import_records: {} })
       }
