@@ -5,8 +5,8 @@
 - [x] Setup Order to buy assets
 - [x] API for admin to manage assets and knowing Earnings of each creator
 - [x] Handle cents unit currency
+- [x] Setup Enum for asset status
 - [ ] Setup S3 instead of local storage
-- [ ] Setup Enum for asset status
 - [ ] Standardize API responses
 - [ ] Build a job to simulate payment
 - [ ] Soft delete
