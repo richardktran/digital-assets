@@ -22,9 +22,13 @@ interface User {
 }
 
 interface LoginResponse {
-  token: string;
-  expires_at: number;
-  user: User;
+  success: boolean;
+  data: {
+    token: string;
+    expires_at: number;
+    user: User;
+  };
+  message: string;
 }
 
 export default function LoginPage() {
@@ -39,18 +43,23 @@ export default function LoginPage() {
 
     try {
       const { data } = await api.post<LoginResponse>('/api/v1/auth', { email, password });
+
+      if (!data.success) {
+        setError(data.message);
+        return;
+      }
       
       // Set the token cookie
-      setCookie('token', data.token, {
-        maxAge: data.expires_at - Math.floor(Date.now() / 1000),
+      setCookie('token', data.data.token, {
+        maxAge: data.data.expires_at - Math.floor(Date.now() / 1000),
         path: '/',
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
       });
 
       // Set the user cookie
-      setCookie('user', JSON.stringify(data.user), {
-        maxAge: data.expires_at - Math.floor(Date.now() / 1000),
+      setCookie('user', JSON.stringify(data.data.user), {
+        maxAge: data.data.expires_at - Math.floor(Date.now() / 1000),
         path: '/',
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',

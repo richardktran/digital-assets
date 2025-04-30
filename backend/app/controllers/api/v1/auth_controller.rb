@@ -9,7 +9,7 @@ class Api::V1::AuthController < ApplicationController
 
       response_success({ token:, expires_at:, user: })
     else
-      response_error("unauthorized", status: :unauthorized)
+      response_error("Invalid email or password", status: :unauthorized)
     end
   end
 end
