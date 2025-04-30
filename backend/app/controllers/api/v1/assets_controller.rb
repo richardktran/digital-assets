@@ -11,6 +11,12 @@ class Api::V1::AssetsController < ApplicationController
       return render json: { error: "Must upload a JSON file" }, status: :unprocessable_entity
     end
 
+    # find import job with status pending
+    import_job = ImportJob.where(creator: current_user, status: "pending").first
+    if import_job
+      return render json: { error: "A job is already being processed. Please wait for it to finish." }, status: :unprocessable_entity
+    end
+
     import_job = ImportJob.new(creator: current_user, status: "pending")
     import_job.file.attach(params[:file])
     if import_job.save

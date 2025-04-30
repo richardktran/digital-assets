@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :assets, only: %i[index show update destroy] do
         collection do
           post :import
+          get "jobs/latest", to: "import_jobs#latest"
           get "jobs/:id", to: "import_jobs#show"
         end
       end
