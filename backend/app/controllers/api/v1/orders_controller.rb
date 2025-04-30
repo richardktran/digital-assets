@@ -44,7 +44,7 @@ class Api::V1::OrdersController < ApplicationController
         idempotency_key: idempotency_key,
         total_amount: total_price,
         user: current_user,
-        status: "pending"
+        status: :pending
       )
 
       if order.invalid?
@@ -60,7 +60,7 @@ class Api::V1::OrdersController < ApplicationController
       end
 
       # Simulate a payment success
-      order.update!(status: "completed")
+      order.update!(status: :completed)
 
       render json: { data: order }, status: :created
     end
