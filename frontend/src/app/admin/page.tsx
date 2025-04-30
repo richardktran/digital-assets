@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCookie } from 'cookies-next';
+import CreatorEarningsTable from '@/components/CreatorEarningsTable';
 
 interface User {
   id: number;
@@ -57,9 +58,18 @@ export default function AdminPage() {
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 p-4">
-            <h2 className="text-2xl font-bold mb-4">Admin Dashboard</h2>
-            <p>This page is only accessible to admin users.</p>
+          <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div className="px-4 py-5 sm:px-6">
+              <h2 className="text-lg leading-6 font-medium text-gray-900">
+                Creator Earnings
+              </h2>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                Overview of creator earnings and sales
+              </p>
+            </div>
+            <div className="border-t border-gray-200">
+              <CreatorEarningsTable />
+            </div>
           </div>
         </div>
       </main>
