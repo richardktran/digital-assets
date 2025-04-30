@@ -19,6 +19,14 @@ Rails.application.routes.draw do
         end
       end
 
+      namespace :admin do
+        resources :statistics, only: [] do
+          collection do
+            get "creators_earning", to: "statistics#creators_earning"
+          end
+        end
+      end
+
       resources :orders, only: %i[index create show]
     end
   end
