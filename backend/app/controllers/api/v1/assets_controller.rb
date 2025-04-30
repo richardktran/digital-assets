@@ -9,25 +9,17 @@ class Api::V1::AssetsController < ApplicationController
       assets = Asset.where.not(creator_id: current_user.id)
     end
 
-    render json: {
-      data: assets
-    }, status: :ok
+    render_assets(assets)
   end
 
   def my
     assets = Asset.where(creator_id: current_user.id)
 
-    render json: {
-      data: assets
-    }, status: :ok
+    render_assets(assets)
   end
 
   def show
-    render json: {
-      data: @asset.as_json().merge(
-        file: @asset.accessible_by?(current_user) ? @asset.asset_files : nil
-      )
-    }, status: :ok
+    render_assets(@asset)
   end
 
   def update
@@ -37,9 +29,7 @@ class Api::V1::AssetsController < ApplicationController
         asset_file.update(asset_file_params)
       end
 
-      render json: {
-        data: @asset
-      }, status: :ok
+      render_assets(@asset)
     else
       render json: {
         error: @asset.errors.full_messages
@@ -75,5 +65,11 @@ class Api::V1::AssetsController < ApplicationController
 
   def asset_file_params
     params.require(:asset_file).permit(:file_url)
+  end
+
+  def render_assets(assets)
+    render json: {
+      data: assets.as_json(current_user: current_user)
+    }, status: :ok
   end
 end
