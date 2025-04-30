@@ -213,7 +213,7 @@ export default function AssetsPage() {
                           {asset.description}
                         </p>
                         <p className="mt-1 text-sm text-gray-500">
-                          Price: ${(asset.price / 100).toFixed(2)}
+                          Price: ${asset.price}
                         </p>
                         <p className="mt-1 text-sm text-gray-500">
                           File: {asset.asset_files.file_url}
