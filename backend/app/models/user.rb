@@ -10,4 +10,8 @@ class User < ApplicationRecord
   def admin?
     role.name == "admin"
   end
+
+  def creator?
+    role.name == "creator"
+  end
 end
