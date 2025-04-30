@@ -5,26 +5,27 @@ class Api::V1::ImportJobsController < ApplicationController
 
 
   def show
-    if @import_job.status == "completed"
-      render json: {
-        data: @import_job.as_json(include: { import_records: {} })
-      }
-    else
-      render json: {
-        data: @import_job.as_json
-      }
-    end
+    render_import_job(@import_job)
   end
 
   def latest
-    @import_job = ImportJob.where(creator: current_user).order(created_at: :desc).first
-    render json: {
-      data: @import_job.as_json
-    }
+    import_job = ImportJob.where(creator: current_user).order(created_at: :desc).first
+    render_import_job(import_job)
   end
 
   private
 
+  def render_import_job(import_job)
+    if import_job.status == "completed"
+      render json: {
+        data: import_job.as_json(include: { import_records: {} })
+      }
+    else
+      render json: {
+        data: import_job.as_json
+      }
+    end
+  end
 
   def set_import_job
     @import_job = ImportJob.find(params[:id])
