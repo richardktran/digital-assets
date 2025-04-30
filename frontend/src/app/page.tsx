@@ -187,6 +187,11 @@ export default function HomePage() {
             {error}
           </div>
         )}
+        {user && (
+          <div className="my-4">
+            <p>Logged in as: {user.email}</p>
+          </div>
+        )}
 
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">

@@ -3,7 +3,6 @@ class ImportRecord < ApplicationRecord
   cents_accessor :price
 
   belongs_to :import_job
-  # validates :status, presence: true, inclusion: { in: %w[pending imported failed] }
 
   enum :status, {
     pending: 'pending',

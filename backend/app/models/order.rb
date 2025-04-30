@@ -7,5 +7,10 @@ class Order < ApplicationRecord
 
   validates :idempotency_key, presence: true, uniqueness: true
   validates :total_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :status, presence: true, inclusion: { in: %w[pending completed failed] }
+
+  enum :status, {
+    pending: 'pending',
+    completed: 'completed',
+    failed: 'failed'
+  }, default: :pending
 end
