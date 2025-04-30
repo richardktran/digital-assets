@@ -1,58 +1,5 @@
 [
     {
-      "title": "Modern UI Kit",
-      "description": "A complete UI kit with over 200 components for modern web apps.",
-      "file_url": "https://example.com/files/ui-kit.zip",
-      "price": 29.99
-    },
-    {
-      "title": "E-commerce Icon Pack",
-      "description": "50 vector icons optimized for online stores.",
-      "file_url": "https://example.com/files/ecommerce-icons.zip"
-    },
-    {
-      "title": "Resume Template - Minimalist",
-      "description": "A clean and professional resume template in Word and PDF formats.",
-      "file_url": "https://example.com/files/resume-template.zip",
-      "price": 4.99
-    },
-    {
-      "title": "Dark Mode Dashboard",
-      "description": "A sleek dark-themed admin dashboard template built with Tailwind CSS.",
-      "file_url": "https://example.com/files/dark-dashboard.zip",
-      "price": 24.00
-    },
-    {
-      "title": "Photography Lightroom Presets",
-      "description": "10 presets to enhance outdoor and portrait photos.",
-      "file_url": "https://example.com/files/lightroom-presets.zip",
-      "price": 12.50
-    },
-    {
-      "title": "Invoice Generator App Template",
-      "description": "A full-featured React template for creating invoices.",
-      "file_url": "https://example.com/files/invoice-app.zip",
-      "price": 39.00
-    },
-    {
-      "title": "Landing Page - Startup",
-      "description": "A responsive landing page perfect for SaaS startups.",
-      "file_url": "https://example.com/files/startup-landing.zip",
-      "price": 19.95
-    },
-    {
-      "title": "Mobile App Wireframes",
-      "description": "Figma wireframes for iOS and Android mobile apps.",
-      "file_url": "https://example.com/files/app-wireframes.zip",
-      "price": 14.99
-    },
-    {
-      "title": "Blog Template - GatsbyJS",
-      "description": "A high-performance blog starter built with GatsbyJS.",
-      "file_url": "https://example.com/files/gatsby-blog.zip",
-      "price": 17.00
-    },
-    {
       "title": "Music Visualizer Template",
       "description": "After Effects template for visualizing music and audio.",
       "file_url": "https://example.com/files/music-visualizer.zip",
@@ -118,5 +65,5 @@
       "file_url": "https://example.com/files/menu-template.zip",
       "price": 9.49
     }
-  ]
+]
   
