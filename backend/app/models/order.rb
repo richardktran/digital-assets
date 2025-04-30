@@ -1,4 +1,7 @@
 class Order < ApplicationRecord
+  include CentsAttribute
+  cents_accessor :total_amount
+
   belongs_to :user, class_name: "User"
   has_many :order_items, dependent: :destroy
 

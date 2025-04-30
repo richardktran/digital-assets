@@ -52,7 +52,7 @@ class ImportAssetsJob < ApplicationJob
             title: asset_data['title'],
             description: asset_data['description'],
             file_url: asset_data['file_url'],
-            price: asset_data['price'] ? asset_data['price'] * 100 : nil, # Convert to cents if present, otherwise nil
+            price: asset_data['price'] ? asset_data['price'] : nil, # Convert to cents if present, otherwise nil
             status: 'pending'
           )
 
