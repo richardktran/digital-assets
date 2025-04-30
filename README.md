@@ -30,7 +30,14 @@ A full-stack digital assets marketplace platform that allows users to buy and se
    cp frontend/env.example frontend/.env.local
    ```
 
-3. Start the application using Docker:
+3. Generate RAILS_MASTER_KEY
+  ```bash
+    EDITOR="code --wait" rails credentials:edit
+    Get the key from backend/config/master.key
+    Add the key to .env file
+  ```
+
+4. Start the application using Docker:
    ```bash
    docker-compose up --build
    ```
